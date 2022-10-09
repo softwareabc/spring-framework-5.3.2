@@ -2,10 +2,10 @@ package mytest;
 
 /**
  * @author dufresne
- * @date 2022/9/4
+ * @date 2022/9/26
  */
-public class MyTestBean {
-	private String testStr = "myTestBeanStr";
+public class TestBean {
+	private String testStr = "testBeanStr";
 
 	public String getTestStr() {
 		return testStr;

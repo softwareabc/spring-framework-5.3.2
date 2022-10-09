@@ -20,6 +20,8 @@ public class MyApplicationContextTest {
 //		BeanFactory bf = new XmlBeanFactory(new ClassPathResource("xmlTest.xml", getClass()));
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("mytest/xmlTest.xml");
 		MyTestBean bean = (MyTestBean) applicationContext.getBean("myTestBean");
-		Assert.isTrue("testStr".equals(bean.getTestStr()), "it's a pity!");
+		Assert.isTrue("myTestBeanStr".equals(bean.getTestStr()), "it's a pity!");
+		//Configuration problem: Bean name 'myTestBean' is already used in this <beans> element
+		//Offending resource: class path resource [mytest/xmlTest.xml]
 	}
 }

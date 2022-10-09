@@ -124,9 +124,16 @@ public abstract class AbstractRefreshableApplicationContext extends AbstractAppl
 			closeBeanFactory();
 		}
 		try {
+			//创建DefaultListableBeanFactory，该类是容器的基础
 			DefaultListableBeanFactory beanFactory = createBeanFactory();
+			//指定一个id用于序列化。如果必要的话，可以使得BeanFactory通过这个序列化id反序列化为BeanFactory对象
 			beanFactory.setSerializationId(getId());
+			//定制beanFactory，设置相关属性，包括是否允许覆盖同名称的不同定义的对象（bean，应该是重复定义bean时可以覆盖）
+			//以及是否允许bean之间存在循环依赖。
+			//以及设置@Autowired和@Qualifier注解解析器QualifierAnnotationAutowireCandidateResolver，（应该在别的地方）
+			//提供了注解@Qualifier和@Autowired的支持（应该是构造方法注入、setter注入、@Autowired吧）（应该在别的地方）
 			customizeBeanFactory(beanFactory);
+			//加载BeanDefinition，初始化DocumentReader，并进行XML文件读取及解析
 			loadBeanDefinitions(beanFactory);
 			this.beanFactory = beanFactory;
 		}
@@ -211,6 +218,7 @@ public abstract class AbstractRefreshableApplicationContext extends AbstractAppl
 	 * @see DefaultListableBeanFactory#setAllowRawInjectionDespiteWrapping
 	 * @see DefaultListableBeanFactory#setAllowEagerClassLoading
 	 */
+	//这俩设置默认是true，但是这里提供了给开发者通过子类修改这两个属性的方法
 	protected void customizeBeanFactory(DefaultListableBeanFactory beanFactory) {
 		if (this.allowBeanDefinitionOverriding != null) {
 			beanFactory.setAllowBeanDefinitionOverriding(this.allowBeanDefinitionOverriding);
